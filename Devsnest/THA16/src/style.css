@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 50%;
+  width: 50%;
+  border: 1px solid grey;
+  box-shadow: 2px 3px 2px 0px grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 2px;
+}
+
+.card img {
+  width: 97.5%;
+  border-radius: 2px;
+
+}
