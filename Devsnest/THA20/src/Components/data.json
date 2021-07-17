@@ -1,0 +1,37 @@
+[
+  {
+    "id": 0,
+    "food": "Pizza",
+    "cals": 56
+  },
+  {
+    "id": 1,
+    "food": "Burger",
+    "cals": 69
+  },
+  {
+    "id": 2,
+    "food": "Coke",
+    "cals": 500
+  },
+  {
+    "id": 3,
+    "food": "Brownie",
+    "cals": 180
+  },
+  {
+    "id": 4,
+    "food": "Fried Rice",
+    "cals": 90
+  },
+  {
+    "id": 5,
+    "food": "Lassania",
+    "cals": 200
+  },
+  {
+    "id": 6,
+    "food": "Pani-puri",
+    "cals": 10
+  }
+]
