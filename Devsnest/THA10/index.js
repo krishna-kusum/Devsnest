@@ -117,8 +117,9 @@ function youWon() {
     if (matches === 8) {
         setTimeout(() => {
 
-            alert("****Congratulations!! You won!****")
-        }, 2000)
+            alert(`****Congratulations!! You won!****
+            Reload to play Again`)
+        }, 1500)
     }
 }
 
