@@ -1,69 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-				<title>Page title</title>
+    <title>Page title</title>
 </head>
+
 <body>
-				<script>
-								//qs1
-								function is_array(arr){
-				return Array.isArray(arr);
-}
+    <script>
+        //qs1
+        function is_array(arr) {
+            return Array.isArray(arr);
+        }
 
-console.log(is_array('w3resource'));
-console.log(is_array([1,0,12]));
+        console.log(is_array('w3resource'));
+        console.log(is_array([1, 0, 12]));
 
-//qs2
+        //qs2
 
-function array_Clone(arr){
-				var arrClone = arr.slice(0);
-				return arrClone;
-}
+        function array_Clone(arr) {
+            var arrClone = arr.slice(0);
+            return arrClone;
+        }
 
-console.log(array_Clone([1,2,4,0]));
-console.log(array_Clone([1,2,[4,0]]));
+        console.log(array_Clone([1, 2, 4, 0]));
+        console.log(array_Clone([1, 2, [4, 0]]));
 
-//qs3
+        //qs3
 
-function first(arr,n=1){
-				var first = arr.slice(0,n);
-				return first;
-}
+        function first(arr, n = 1) {
+            var first = arr.slice(0, n);
+            return first;
+        }
 
-console.log(first([7,9,0,-2]));
-console.log(first([],3));
-console.log(first([7,9,0,-2],3));
-console.log(first([7,9,0,-2],6));
-console.log(first([7,9,0,-2],-4));
+        console.log(first([7, 9, 0, -2]));
+        console.log(first([], 3));
+        console.log(first([7, 9, 0, -2], 3));
+        console.log(first([7, 9, 0, -2], 6));
+        console.log(first([7, 9, 0, -2], -4));
 
-//qs4
-var myColor =["Red","Green","White","Black"];
+        //qs4
+        var myColor = ["Red", "Green", "White", "Black"];
 
-console.log(myColor.join(''));
-console.log(myColor.join(','));
-console.log(myColor.join('+'));
+        console.log(myColor.join(''));
+        console.log(myColor.join(','));
+        console.log(myColor.join('+'));
 
-//qs5
-const arr=[3,'a','a','a',2,3,'a',3,'a', 2,4,3,9];
-var mode = 0;
-var max = 0;
-var item;
+        //qs5
+        const arr = [3, 'a', 'a', 'a', 2, 3, 'a', 3, 'a', 2, 4, 3, 9];
+        var mode = 0;
+        var max = 0;
+        var item;
 
-for(let i=0; i < arr.length;i++){
-				for(let j=i; j < arr.length;j++){
-								if(arr[i]===arr[j]) {
-												max++;												
-								}	
-								if(max > mode) {
-															mode = max;
-															item = arr[i];
-						}
-																		
-				}
-				max=0;	
-}
-console.log(item + " ( " + mode + " times )");
+        for (let i = 0; i < arr.length; i++) {
+            for (let j = i; j < arr.length; j++) {
+                if (arr[i] === arr[j]) {
+                    max++;
+                }
+                if (max > mode) {
+                    mode = max;
+                    item = arr[i];
+                }
 
-				</script>
+            }
+            max = 0;
+        }
+        console.log(item + " ( " + mode + " times )");
+    </script>
 </body>
+
 </html>
