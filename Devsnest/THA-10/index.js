@@ -115,7 +115,10 @@ function reset() {
 
 function youWon() {
     if (matches === 8) {
-        alert("****Congratulations!! You won!****")
+        setTimeout(() => {
+
+            alert("****Congratulations!! You won!****")
+        }, 2000)
     }
 }
 

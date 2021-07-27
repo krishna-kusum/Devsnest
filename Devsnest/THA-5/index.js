@@ -11,10 +11,10 @@ window.onload = () => {
         const first = parseFloat(firstInput.value);
         const second = parseFloat(secondInput.value);
 
-        if (first == NaN || second == NaN) {
-            alert("Please Fill input number")
-            return
-        }
+        // if (first == NaN || second == NaN) {
+        //     alert("Please Fill input number")
+        //     return
+        // }
 
 
         const operation = oprtn;

@@ -84,13 +84,13 @@ body {
 
 @media (max-width:768px) {
     .container {
-        font-size: 10px;
+        font-size: 16px;
     }
     .back {
-        font-size: 8px;
+        font-size: 20px;
     }
     .front {
-        font-size: 10px;
+        font-size: 26px;
     }
     .front,
     .back {
