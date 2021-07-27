@@ -1,76 +1,79 @@
-*{
-				margin:0;
-				padding:0;
-				list-style: none;
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-.clock{
-				width: 300px;
-				height: 300px;
-				border-radius: 50%;
-				background: #fff;
-				margin: 200px auto;
-				position: relative;
-				border: 2.5rem solid #ff2b35;
-				box-shadow: 0 0 10px #000, #000 0 0 5px inset;
-											
-}
-.clock li{
-				position: absolute;
+.clock {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: #fff;
+    margin: 200px auto;
+    position: relative;
+    border: 2.5rem solid #ff2b35;
+    box-shadow: 0 0 10px #000, #000 0 0 5px inset;
 }
 
-#sec{
-				height:100%;
-				width: 100%;
-				animation: sec 60s steps(60,end) infinite;
-}
-#sec::after{
-				content:"";
-				width: 3px;
-				height: 130px;
-				background: black;
-				position: absolute;
-				left: calc(50% - 2px);	
-				top: 20px;
-				transform-origin: 0 50%;		
-}
-#min{
-				height:100%;
-				width: 100%;
-				transform: rotateZ(-120deg);
-				animation: sec 3600s steps(60,end) infinite;
-}
-#min::after{
-				content:"";
-				width: 3px;
-				height: 130px;
-				background: black;
-				position: absolute;
-				left: calc(50% - 2px);	
-				top: 20px;						
-				transform-origin: 0 50%;
+.clock li {
+    position: absolute;
 }
 
-#hour{
-				height:100%;
-				width: 100%;
-				transform:rotateZ(120deg);
-				animation: sec 216000s steps(60,end) infinite;
-				
-}
-#hour::after{
-				content:"";
-				width: 3px;
-				height: 130px;
-				background: black;
-				position: absolute;
-				left: calc(50% - 2px);	
-				top: 20px;
-				transform-origin: 0 50%;		
-}
-@keyframes sec{
-				to{
-								transform: rotate(360deg);
-				}
+#sec {
+    height: 100%;
+    width: 100%;
+    animation: sec 60s steps(60, end) infinite;
 }
 
+#sec::after {
+    content: "";
+    width: 3px;
+    height: 130px;
+    background: black;
+    position: absolute;
+    left: calc(50% - 2px);
+    top: 20px;
+    transform-origin: 0 50%;
+}
+
+#min {
+    height: 100%;
+    width: 100%;
+    transform: rotateZ(-120deg);
+    animation: sec 3600s steps(60, end) infinite;
+}
+
+#min::after {
+    content: "";
+    width: 3px;
+    height: 130px;
+    background: black;
+    position: absolute;
+    left: calc(50% - 2px);
+    top: 20px;
+    transform-origin: 0 50%;
+}
+
+#hour {
+    height: 100%;
+    width: 100%;
+    transform: rotateZ(120deg);
+    animation: sec 216000s steps(60, end) infinite;
+}
+
+#hour::after {
+    content: "";
+    width: 3px;
+    height: 130px;
+    background: black;
+    position: absolute;
+    left: calc(50% - 2px);
+    top: 20px;
+    transform-origin: 0 50%;
+}
+
+@keyframes sec {
+    to {
+        transform: rotate(360deg);
+    }
+}
