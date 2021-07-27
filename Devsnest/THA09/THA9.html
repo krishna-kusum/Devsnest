@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Page title</title>
+</head>
+
+<body>
+    <script>
+        // qs1
+
+        let student1 = {
+            name: "David Rayy",
+            sclass: "VI",
+            rollNo: 12,
+            marks: function(year, month) {
+                console.log(`${this.name}, student of	class ${this.sclass} Roll no.${this.rollNo} secured 367 out of 500; ${year} years and ${month} months ago.`);
+            }
+
+        }
+
+        let student2 = {
+            name: "Honey Singh",
+            sclass: "VII",
+            rollNo: 17,
+
+        }
+
+        //call
+        student1.marks.call(student2, 3, 6);
+        //apply
+        student1.marks.apply(student2, [3, 6]);
+        //bind
+        const marksObtained = student1.marks.bind(student2, 3, 6);
+        marksObtained();
+
+
+        //qs2
+    </script>
+</body>
+
+</html>
