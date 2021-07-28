@@ -1,0 +1,22 @@
+import {useState} from 'react'
+
+const useInput = (initialValue) => {
+
+  const [value, setValue] = useState(initialValue);
+
+  const reset = ()=>{
+    setValue(initialValue)
+
+  }
+  const bind = {
+    value : value,//value es6 shorthand syntax
+    onChange : e => {
+      setValue(e.target.value)
+    }
+  }
+  
+  return [value, bind, reset];
+  
+}
+
+export default useInput;
