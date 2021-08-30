@@ -1,0 +1,457 @@
+ 
+/**** Start ******/
+
+
+postgres=# CREATE USER kusum WITH PASSWORD 'pwd';
+CREATE ROLE
+postgres=# create database devsDB;
+CREATE DATABASE
+postgres=# GRANT ALL PRIVILEGES ON DATABSE devsDB to kusum;
+ERROR:  syntax error at or near "devsDB"
+LINE 1: GRANT ALL PRIVILEGES ON DATABSE devsDB to kusum;
+                                        ^
+postgres=# GRANT ALL PRIVILEGES ON DATABASE devsDB to kusum;
+GRANT
+postgres=# DROP DATABASE IF EXISTS devsDB;
+DROP DATABASE
+postgres=# create database devsDB;
+CREATE DATABASE
+postgres=# \l
+                                         List of databases
+    Name    |  Owner   | Encoding |      Collate       |       Ctype        |   Access privileges
+------------+----------+----------+--------------------+--------------------+-----------------------
+ developers | postgres | UTF8     | English_India.1252 | English_India.1252 |
+ devs       | postgres | UTF8     | English_India.1252 | English_India.1252 | =Tc/postgres         +
+            |          |          |                    |                    | postgres=CTc/postgres+
+            |          |          |                    |                    | krishna=CTc/postgres
+ devsdb     | postgres | UTF8     | English_India.1252 | English_India.1252 |
+ devsnest   | postgres | UTF8     | English_India.1252 | English_India.1252 |
+ postgres   | postgres | UTF8     | English_India.1252 | English_India.1252 |
+ template0  | postgres | UTF8     | English_India.1252 | English_India.1252 | =c/postgres          +
+            |          |          |                    |                    | postgres=CTc/postgres
+ template1  | postgres | UTF8     | English_India.1252 | English_India.1252 | =c/postgres          +
+            |          |          |                    |                    | postgres=CTc/postgres
+(7 rows)
+
+
+Previous connection kept
+postgres=# \c devsdb;
+You are now connected to database "devsdb" as user "postgres".
+                           ^
+devsdb=# CREATE TABLE person(
+devsdb(# ID INT PRIMARY KEY NOT NULL, NAME VARCHAR(30) NOT NULL, COLLEGE TEXT, PROFESSION VARCHAR(50) NOT NULL);
+CREATE TABLE
+devsdb=# \d
+         List of relations
+ Schema |  Name  | Type  |  Owner
+--------+--------+-------+----------
+ public | person | table | postgres
+(1 row)
+
+
+devsdb=# \d person
+                        Table "public.person"
+   Column   |         Type          | Collation | Nullable | Default
+------------+-----------------------+-----------+----------+---------
+ id         | integer               |           | not null |
+ name       | character varying(30) |           | not null |
+ college    | text                  |           |          |
+ profession | character varying(50) |           | not null |
+Indexes:
+    "person_pkey" PRIMARY KEY, btree (id)
+
+
+devsdb=# create schema myFolder;
+CREATE SCHEMA
+devsdb=# create table myFolder.company(
+devsdb(# id INT NOT NULL, NAME VARCHAR(30) NOT NULL, AGE INT NOT NULL, SALARY REAL, ADDRESS TEXT, PRIMARY KEY(ID)
+devsdb(# );
+CREATE TABLE
+devsdb=# \d
+         List of relations
+ Schema |  Name  | Type  |  Owner
+--------+--------+-------+----------
+ public | person | table | postgres
+(1 row)
+
+
+devsdb=# \d myFolder
+Did not find any relation named "myFolder".
+devsdb=# \d myFolder.company
+                     Table "myfolder.company"
+ Column  |         Type          | Collation | Nullable | Default
+---------+-----------------------+-----------+----------+---------
+ id      | integer               |           | not null |
+ name    | character varying(30) |           | not null |
+ age     | integer               |           | not null |
+ salary  | real                  |           |          |
+ address | text                  |           |          |
+Indexes:
+    "company_pkey" PRIMARY KEY, btree (id)
+
+
+devsdb=# select * from myFolder.company;
+ id | name | age | salary | address
+----+------+-----+--------+---------
+(0 rows)
+
+
+devsdb=# DROP SCHEMA myFolder CASCADE;
+NOTICE:  drop cascades to table myfolder.company
+DROP SCHEMA
+devsdb=# CREATE SCHEMA myFolder;
+CREATE SCHEMA
+devsdb=# create table myFolder.company(
+devsdb(# id INT NOT NULL, NAME VARCHAR(30) NOT NULL, AGE INT NOT NULL, SALARY REAL, ADDRESS TEXT, PRIMARY KEY(ID)
+devsdb(# );
+CREATE TABLE
+devsdb=# \d myFolder.company;
+                     Table "myfolder.company"
+ Column  |         Type          | Collation | Nullable | Default
+---------+-----------------------+-----------+----------+---------
+ id      | integer               |           | not null |
+ name    | character varying(30) |           | not null |
+ age     | integer               |           | not null |
+ salary  | real                  |           |          |
+ address | text                  |           |          |
+Indexes:
+    "company_pkey" PRIMARY KEY, btree (id)
+
+
+devsdb=# INSERT INTO myFolder.company(ID, NAME, AGE, ADDRESS, SALARY) VALUES (1, 'Paul', 32, 'California',20000.00);
+INSERT 0 1
+devsdb=# INSERT INTO myFolder.company(ID, NAME, AGE, ADDRESS, SALARY) VALUES (2, 'Allen', 25, 'Texas', '32000.00'), (2, 'Allen', 25, 'Texas', '15000.00'),(4, 'Mark', 25, 'Rich-Mond ', 65000.00);
+ERROR:  duplicate key value violates unique constraint "company_pkey"
+DETAIL:  Key (id)=(2) already exists.
+devsdb=# INSERT INTO myFolder.company(ID, NAME, AGE, ADDRESS, SALARY) VALUES (2, 'Allen', 25, 'Texas', '32000.00'),(3, 'Teddy', 23, 'Norway', 20000.00, DEFAULT ) ,(4, 'Mark', 25, 'Rich-Mond ', 65000.00);
+ERROR:  VALUES lists must all be the same length
+LINE 1: ...RY) VALUES (2, 'Allen', 25, 'Texas', '32000.00'),(3, 'Teddy'...
+                                                             ^
+devsdb=# INSERT INTO myFolder.company(ID, NAME, AGE, ADDRESS, SALARY) VALUES (2, 'Allen', 25, 'Texas', '32000.00'),(3, 'Teddy', 23, 'Norway', DEFAULT ) ,(4, 'Mark', 25, 'Rich-Mond ', 65000.00);
+INSERT 0 3
+devsdb=# \d myFolder.devsDB;
+Did not find any relation named "myFolder.devsDB".
+devsdb=# select * from myFolder.company
+devsdb-# ;
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  1 | Paul  |  32 |  20000 | California
+  2 | Allen |  25 |  32000 | Texas
+  3 | Teddy |  23 |        | Norway
+  4 | Mark  |  25 |  65000 | Rich-Mond
+(4 rows)
+
+
+devsdb=# select count(*) as "records" from myFolder.company;
+ records
+---------
+       4
+(1 row)
+
+
+devsdb=# SELECT * FROM COMPANY WHERE AGE >= 25 AND SALARY >= 65000;
+ERROR:  relation "company" does not exist
+LINE 1: SELECT * FROM COMPANY WHERE AGE >= 25 AND SALARY >= 65000;
+                      ^
+devsdb=# SELECT * FROM myFolder.COMPANY WHERE AGE >= 25 AND SALARY >= 65000;
+ id | name | age | salary |  address
+----+------+-----+--------+------------
+  4 | Mark |  25 |  65000 | Rich-Mond
+(1 row)
+
+
+devsdb=# SELECT * FROM myFolder.COMPANY WHERE salary IS NOT NULL;
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  1 | Paul  |  32 |  20000 | California
+  2 | Allen |  25 |  32000 | Texas
+  4 | Mark  |  25 |  65000 | Rich-Mond
+(3 rows)
+
+
+devsdb=# SELECT * FROM myFolder.COMPANY WHERE NAME LIKE 'Pa%';
+ id | name | age | salary |  address
+----+------+-----+--------+------------
+  1 | Paul |  32 |  20000 | California
+(1 row)
+
+
+devsdb=# SELECT * FROM myFolder.COMPANY WHERE SALARY::text LIKE '200%';
+ id | name | age | salary |  address
+----+------+-----+--------+------------
+  1 | Paul |  32 |  20000 | California
+(1 row)
+
+
+devsdb=# SELECT * FROM myFolder.COMPANY WHERE AGE IN ( 25, 27 );
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  2 | Allen |  25 |  32000 | Texas
+  4 | Mark  |  25 |  65000 | Rich-Mond
+(2 rows)
+
+
+devsdb=# SELECT * FROM myFolder.COMPANY WHERE AGE not IN ( 25, 27 );
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  1 | Paul  |  32 |  20000 | California
+  3 | Teddy |  23 |        | Norway
+(2 rows)
+
+
+devsdb=# SELECT * FROM myFolder.COMPANY WHERE AGE between 23 and 25;
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  2 | Allen |  25 |  32000 | Texas
+  3 | Teddy |  23 |        | Norway
+  4 | Mark  |  25 |  65000 | Rich-Mond
+(3 rows)
+
+
+devsdb=# select age from company where exists (select age from company where salary>2000);
+ERROR:  relation "company" does not exist
+LINE 1: select age from company where exists (select age from compan...
+                        ^
+devsdb=# select age from myFolder.company where exists (select age from company where salary>2000);
+ERROR:  relation "company" does not exist
+LINE 1: ...om myFolder.company where exists (select age from company wh...
+                                                             ^
+devsdb=# select age from myFolder.company where exists (select age from myFolder.company where salary>2000);
+ age
+-----
+  32
+  25
+  23
+  25
+(4 rows)
+
+
+devsdb=# select * from myFolder.company where age> (select age from myFolder.company where salary>2000);
+ERROR:  more than one row returned by a subquery used as an expression
+devsdb=# select * from myFolder.company where age> (select age from myFolder.company where salary>20000);
+ERROR:  more than one row returned by a subquery used as an expression
+devsdb=# select * from myFolder.company where age> (select age from myFolder.company where salary>32000);
+ id | name | age | salary |  address
+----+------+-----+--------+------------
+  1 | Paul |  32 |  20000 | California
+(1 row)
+
+
+devsdb=# select * from company limit 2;
+ERROR:  relation "company" does not exist
+LINE 1: select * from company limit 2;
+                      ^
+devsdb=# select * from myFolder.company limit 2;
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  1 | Paul  |  32 |  20000 | California
+  2 | Allen |  25 |  32000 | Texas
+(2 rows)
+
+
+devsdb=# select * from myFolder.company limit 3 offset 2;
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  3 | Teddy |  23 |        | Norway
+  4 | Mark  |  25 |  65000 | Rich-Mond
+(2 rows)
+
+
+devsdb=# select * from myFolder.company limit 2 offset 2;
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  3 | Teddy |  23 |        | Norway
+  4 | Mark  |  25 |  65000 | Rich-Mond
+(2 rows)
+
+
+devsdb=# select * from myFolder.company limit 1 offset 2;
+ id | name  | age | salary | address
+----+-------+-----+--------+---------
+  3 | Teddy |  23 |        | Norway
+(1 row)
+
+
+devsdb=# select * from myFolder.company order by name desc;
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  3 | Teddy |  23 |        | Norway
+  1 | Paul  |  32 |  20000 | California
+  4 | Mark  |  25 |  65000 | Rich-Mond
+  2 | Allen |  25 |  32000 | Texas
+(4 rows)
+
+
+devsdb=# select * from myFolder.company order by address asc;
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  1 | Paul  |  32 |  20000 | California
+  3 | Teddy |  23 |        | Norway
+  4 | Mark  |  25 |  65000 | Rich-Mond
+  2 | Allen |  25 |  32000 | Texas
+(4 rows)
+
+
+devsdb=# update myFolder.company set salary = 45000.00 where id = 1;
+UPDATE 1
+devsdb=# select * from myFolder.company
+devsdb-# ;
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  2 | Allen |  25 |  32000 | Texas
+  3 | Teddy |  23 |        | Norway
+  4 | Mark  |  25 |  65000 | Rich-Mond
+  1 | Paul  |  32 |  45000 | California
+(4 rows)
+
+
+devsdb=# delete from myFolder.company where id = 3;
+DELETE 1
+devsdb=# select * from myFolder.company ;
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  2 | Allen |  25 |  32000 | Texas
+  4 | Mark  |  25 |  65000 | Rich-Mond
+  1 | Paul  |  32 |  45000 | California
+(3 rows)
+
+
+devsdb=# drop table if exists myFolder.customers;
+NOTICE:  table "customers" does not exist, skipping
+DROP TABLE
+devsdb=# drop table if exists myFolder.contacts;
+NOTICE:  table "contacts" does not exist, skipping
+DROP TABLE
+devsdb=# create table myFolder.customers(
+devsdb(# customer_id int generated always as identity,
+devsdb(# customer_name as varchar(255) not null,
+devsdb(# primary key(customer_id)
+devsdb(# );
+ERROR:  syntax error at or near "as"
+LINE 3: customer_name as varchar(255) not null,
+                      ^
+devsdb=# create table myFolder.customers(
+devsdb(# customer_id int generated always as identity,
+devsdb(# customer_name varchar(255) not null,
+devsdb(# primary key(customer_id)
+devsdb(# );
+CREATE TABLE
+devsdb=# \d myFolder.customers;
+                                  Table "myfolder.customers"
+    Column     |          Type          | Collation | Nullable |           Default 
+---------------+------------------------+-----------+----------+------------------------------
+ customer_id   | integer                |           | not null | generated always as identity
+ customer_name | character varying(255) |           | not null |
+Indexes:
+    "customers_pkey" PRIMARY KEY, btree (customer_id)
+
+
+devsdb=# \l
+                                         List of databases
+    Name    |  Owner   | Encoding |      Collate       |       Ctype        |   Access privileges
+------------+----------+----------+--------------------+--------------------+-----------------------
+ developers | postgres | UTF8     | English_India.1252 | English_India.1252 |
+ devs       | postgres | UTF8     | English_India.1252 | English_India.1252 | =Tc/postgres         +
+            |          |          |                    |                    | postgres=CTc/postgres+
+            |          |          |                    |                    | krishna=CTc/postgres
+ devsdb     | postgres | UTF8     | English_India.1252 | English_India.1252 |
+ devsnest   | postgres | UTF8     | English_India.1252 | English_India.1252 |
+ postgres   | postgres | UTF8     | English_India.1252 | English_India.1252 |
+ template0  | postgres | UTF8     | English_India.1252 | English_India.1252 | =c/postgres          +
+            |          |          |                    |                    | postgres=CTc/postgres
+ template1  | postgres | UTF8     | English_India.1252 | English_India.1252 | =c/postgres          +
+            |          |          |                    |                    | postgres=CTc/postgres
+(7 rows)
+
+                                                 ^
+devsdb=# create table myFolder.contacts(
+devsdb(# contact_id int not null,
+devsdb(# customer_id int,
+devsdb(# contact_name varchar(255) not null,
+devsdb(# phone varchar(15) ,
+devsdb(# email varchar(100),
+devsdb(# primary key (contact_id),
+devsdb(# constraint foreign_key_customer
+devsdb(# foreign key(customer_id)
+devsdb(# references myFolder.customers(customer_id)
+devsdb(# on delete cascade
+devsdb(# );
+CREATE TABLE
+devsdb=# INSERT INTO myFolder.customers(customer_name) VALUES ('Penthouse Inc.'),('Monthly Magazine House');
+INSERT 0 2
+
+
+devsdb=# INSERT INTO myFolder.contacts(contact_id, customer_id, contact_name, phone, email) values (1,1,'John Doe','(408)-111-1234','john.doe@bluebird.dev');
+INSERT 0 1
+
+                                                                  ^
+devsdb=# INSERT INTO myFolder.contacts(contact_id, customer_id, contact_name, phone, email) values (2,1,'Jane Doe','(408)-111-1235','jane.doe@bluebird.dev');
+INSERT 0 1
+devsdb=# INSERT INTO myFolder.contacts(contact_id, customer_id, contact_name, phone, email) values (3,2,'David Wright','(408)-222-1234','david.wright@dolphin.dev');
+INSERT 0 1
+
+devsdb=# select * from myFolder.company
+devsdb-# ;
+ id | name  | age | salary |  address
+----+-------+-----+--------+------------
+  2 | Allen |  25 |  32000 | Texas
+  4 | Mark  |  25 |  65000 | Rich-Mond
+  1 | Paul  |  32 |  45000 | California
+(3 rows)
+
+
+devsdb=# select * from myFolder.contacts;
+ contact_id | customer_id | contact_name |     phone      |          email         
+------------+-------------+--------------+----------------+--------------------------
+          1 |           1 | John Doe     | (408)-111-1234 | john.doe@bluebird.dev
+          2 |           1 | Jane Doe     | (408)-111-1235 | jane.doe@bluebird.dev
+          3 |           2 | David Wright | (408)-222-1234 | david.wright@dolphin.dev
+(3 rows)
+
+
+devsdb=# \d myFolder.contacts
+                       Table "myfolder.contacts"
+    Column    |          Type          | Collation | Nullable | Default
+--------------+------------------------+-----------+----------+---------
+ contact_id   | integer                |           | not null |
+ customer_id  | integer                |           |          |
+ contact_name | character varying(255) |           | not null |
+ phone        | character varying(15)  |           |          |
+ email        | character varying(100) |           |          |
+Indexes:
+    "contacts_pkey" PRIMARY KEY, btree (contact_id)
+Foreign-key constraints:
+    "foreign_key_customer" FOREIGN KEY (customer_id) REFERENCES myfolder.customers(customer_id) ON DELETE CASCADE
+
+
+devsdb=# delete from customers where customer_id = 1;
+ERROR:  relation "customers" does not exist
+LINE 1: delete from customers where customer_id = 1;
+                    ^
+devsdb=# delete from myFolder.customers where customer_id = 1;
+DELETE 1
+devsdb=# \d myFolder.customers
+                                  Table "myfolder.customers"
+    Column     |          Type          | Collation | Nullable |           Default 
+---------------+------------------------+-----------+----------+------------------------------
+ customer_id   | integer                |           | not null | generated always as identity
+ customer_name | character varying(255) |           | not null |
+Indexes:
+    "customers_pkey" PRIMARY KEY, btree (customer_id)
+Referenced by:
+    TABLE "myfolder.contacts" CONSTRAINT "foreign_key_customer" FOREIGN KEY (customer_id) REFERENCES myfolder.customers(customer_id) ON DELETE CASCADE
+
+
+devsdb=# select * from myFolder.customers
+devsdb-# ;
+ customer_id |     customer_name
+-------------+------------------------
+           2 | Monthly Magazine House
+(1 row)
+
+
+devsdb=# select * from myFolder.contacts;
+ contact_id | customer_id | contact_name |     phone      |          email         
+------------+-------------+--------------+----------------+--------------------------
+          3 |           2 | David Wright | (408)-222-1234 | david.wright@dolphin.dev
+(1 row)
